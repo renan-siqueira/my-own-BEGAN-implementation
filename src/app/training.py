@@ -100,7 +100,7 @@ def train_model(
 
             generator.zero_grad()
             g_loss.backward()
-            optim_d.step()
+            optim_g.step()
 
             # Update k
             balance = (gamma * real_loss - g_loss).item()
