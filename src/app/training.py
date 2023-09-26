@@ -55,6 +55,7 @@ def train_model(
         data_loader, 
         device, 
         z_dim, 
+        k,
         lambda_k,
         gamma,
         num_epochs, 
@@ -66,7 +67,6 @@ def train_model(
     ):
 
     fixed_noise = Variable(torch.randn(sample_size, z_dim, 1, 1)).to(device)
-    k = 0.0
 
     for epoch in range(last_epoch, num_epochs + 1):
         start_time = time.time()
@@ -100,7 +100,7 @@ def train_model(
 
             generator.zero_grad()
             g_loss.backward()
-            optim_d.step()
+            optim_g.step()
 
             # Update k
             balance = (gamma * real_loss - g_loss).item()

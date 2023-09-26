@@ -35,10 +35,12 @@ class Discriminator(nn.Module):
                 layers.append(self._block(in_channels, out_channels, 4, 2, 1, mode))
                 in_channels = out_channels
         elif mode == 'decoder':
+            in_channels = features_d * (2 ** (num_blocks - 1))
+            out_channels = in_channels // 2
             for _ in range(num_blocks - 1):
-                out_channels //= 2
                 layers.append(self._block(in_channels, out_channels, 4, 2, 1, mode))
                 in_channels = out_channels
+                out_channels //= 2
             layers.append(self._block(in_channels, channels_img, 4, 2, 1, mode))
 
         return nn.Sequential(*layers)
