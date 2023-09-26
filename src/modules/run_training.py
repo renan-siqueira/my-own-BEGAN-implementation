@@ -29,7 +29,7 @@ def main(params, path_data, path_dataset, path_train_params):
     generator = Generator(params["z_dim"], params["channels_img"], params["features_g"], img_size=params['image_size']).to(device)
     generator.apply(weights_init)
 
-    discriminator = Discriminator(params["channels_img"], params["features_d"], params["alpha"], img_size=params['image_size']).to(device)
+    discriminator = Discriminator(params["channels_img"], params["features_d"], img_size=params['image_size']).to(device)
     discriminator.apply(weights_init)
 
     data_loader = dataloader(path_dataset, params["image_size"], params["batch_size"])
