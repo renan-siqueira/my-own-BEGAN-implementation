@@ -29,7 +29,7 @@ class Generator(nn.Module):
                 in_channels, out_channels, kernel_size, stride, padding, bias=False
             ),
             nn.BatchNorm2d(out_channels),
-            nn.ReLU(True),
+            nn.LeakyReLU(0.2, inplace=True),
         )
 
     def forward(self, x):

@@ -15,10 +15,11 @@ class Discriminator(nn.Module):
             layers.append(nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding, bias=False))
             layers.append(nn.BatchNorm2d(out_channels))
             layers.append(nn.LeakyReLU(0.2, inplace=True))
+            layers.append(nn.Dropout(0.25))
         elif mode == 'decoder':
             layers.append(nn.ConvTranspose2d(in_channels, out_channels, kernel_size, stride, padding, bias=False))
             layers.append(nn.BatchNorm2d(out_channels))
-            layers.append(nn.ReLU(True))
+            layers.append(nn.LeakyReLU(0.2, inplace=True))
         return nn.Sequential(*layers)
 
     def _make_layers(self, channels_img, features_d, img_size, mode):
