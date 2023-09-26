@@ -18,7 +18,6 @@ def main(params, path_data, path_dataset, path_train_params):
     check_if_gpu_available()
     check_if_set_seed(params["seed"])
 
-    print('Number of repetitions for the discriminator:', params['n_critic'])
     print(f'Image size: {params["image_size"]}x{params["image_size"]}\n')
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
