@@ -124,3 +124,39 @@ The `--training` flag indicates that the training will be executed.
 - You can follow the progress directly in the terminal or console.
 - A log file will be generated in the directory specified version training.
 - At the end of each epoch, samples of generated images will be saved in the folder of version training, inside the samples folder.
+
+---
+
+## 8. How to generate images after completing the training (Beta version):
+
+To generate images after completing the training, execute:
+
+```bash
+python run.py --image
+```
+
+*You can adjust the parameters for image generation in the configuration file at `settings.PATH_IMAGE_PARAMS`.*
+
+---
+
+## 9. How to generate a video through interpolation of the generated images (Beta version):
+
+To generate a video through interpolation of the generated images, execute:
+
+```bash
+python run.py --video
+```
+
+*Adjust the parameters for video generation in the configuration file located at `settings.PATH_VIDEO_PARAMS`.*
+
+---
+
+## 10. Upscaling:
+
+If you want to upscale the generated __images__ or __video__, use the `--upscale` argument followed by the width value:
+
+```bash
+python run.py --image --upscale 1024
+```
+
+*Replace `--image` with `--video` if you're generating a video. The above command will upscale the images to a width of 1024 pixels. Adjust as needed.*
