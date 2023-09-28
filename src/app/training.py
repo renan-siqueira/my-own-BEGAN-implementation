@@ -67,6 +67,7 @@ def train_model(
     ):
 
     fixed_noise = Variable(torch.randn(sample_size, z_dim, 1, 1)).to(device)
+    fid_score = 'Unavailable'
 
     for epoch in range(last_epoch, num_epochs + 1):
         start_time = time.time()
@@ -93,8 +94,9 @@ def train_model(
             z = Variable(torch.randn(images.size(0), z_dim, 1, 1)).to(device)
             fake_images = generator(z)
 
-            # FID test
-            fid_score = calculate_fid(images, fake_images, inception_model)
+            if inception_model:
+                # FID test
+                fid_score = calculate_fid(images, fake_images, inception_model)
 
             g_loss = torch.mean(torch.abs(discriminator(fake_images) - fake_images))
 
