@@ -39,36 +39,39 @@ def multi_interpolate(generator, z_list, steps_between):
     return generated_images
 
 
-def main(train_params, video_params, path_data, path_videos_generated, upscale_width):
+def main(params, path_data, path_videos_generated):
 
-    output_directory = os.path.join(path_videos_generated, video_params['train_version'])
+    output_directory = os.path.join(path_videos_generated, params['training_version'])
 
     check_if_gpu_available()
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    checkpoint_path = f'{path_data}/{video_params["train_version"]}/weights/checkpoint.pth'
+    checkpoint_path = f'{path_data}/{params["training_version"]}/weights/checkpoint.pth'
+    print(checkpoint_path)
     checkpoint = torch.load(checkpoint_path)
 
-    generator = Generator(train_params["z_dim"], train_params["channels_img"], train_params["features_g"], img_size=train_params['image_size']).to(device)
+    generator = Generator(params["z_dim"], params["channels_img"], params["features_g"], img_size=params['image_size']).to(device)
     generator.load_state_dict(checkpoint['generator_state_dict'])
     generator.eval()
 
-    z_points = [torch.randn(1, train_params["z_dim"]).to(device) for _ in range(video_params['interpolate_points'])]
+    z_points = [torch.randn(1, params["z_dim"]).to(device) for _ in range(params['interpolate_points'])]
 
     print("Generating interpolated images...")
-    generated_images = multi_interpolate(generator, z_points, video_params['steps_between'])
+    generated_images = multi_interpolate(generator, z_points, params['steps_between'])
 
     os.makedirs(output_directory, exist_ok=True)
+
+    upscale_width = params.get('upscale_width')
 
     if upscale_width:
         frame_size = (upscale_width, upscale_width)
     else:
-        frame_size = (train_params["image_size"], train_params["image_size"])
+        frame_size = (params["image_size"], params["image_size"])
 
     out = cv2.VideoWriter(
-        os.path.join(output_directory, f'video_{frame_size[0]}x{frame_size[1]}_{video_params["fps"]}fps.mp4'), 
+        os.path.join(output_directory, f'video_{frame_size[0]}x{frame_size[1]}_{params["fps"]}fps.mp4'), 
         cv2.VideoWriter_fourcc(*'mp4v'), 
-        video_params["fps"], 
+        params["fps"], 
         frame_size
     )
 

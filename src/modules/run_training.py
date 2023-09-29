@@ -11,7 +11,7 @@ from src.app.training import train_model
 from src.app.utils import print_datetime, check_if_gpu_available, check_if_set_seed, create_next_version_directory, weights_init, dataloader, load_checkpoint, plot_losses, safe_copy
 
 
-def main(params, path_data, path_dataset, path_train_params):
+def main(params, path_data, path_dataset, path_params):
     time_start = time.time()
     print_datetime()
 
@@ -39,13 +39,18 @@ def main(params, path_data, path_dataset, path_train_params):
     optim_g = optim.Adam(generator.parameters(), lr=params["lr_g"], betas=(params['g_beta_min'], params['g_beta_max']))
     optim_d = optim.Adam(discriminator.parameters(), lr=params["lr_d"], betas=(params['d_beta_min'], params['d_beta_max']))
 
-    training_version = create_next_version_directory(path_data, params['continue_last_training'])
+    resume_training = params.get('resume_training')
+    
+    if resume_training:
+        training_version = params.get('training_version')
+    else:
+        training_version = create_next_version_directory(path_data)
 
     data_dir = os.path.join(path_data, training_version)
     print('Training version:', training_version)
 
     # Create a copy of parameters in training version folder
-    safe_copy(path_train_params, os.path.join(data_dir, path_train_params.split('/')[-1]))
+    safe_copy(params, os.path.join(data_dir, os.path.basename(path_params)))
 
     last_epoch, losses_g, losses_d = load_checkpoint(os.path.join(data_dir, 'weights', 'checkpoint.pth'), generator, discriminator, optim_g, optim_d)
 

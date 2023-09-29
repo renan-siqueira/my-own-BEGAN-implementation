@@ -32,24 +32,24 @@ def tensor_to_PIL_image(img_tensor):
     return Image.fromarray(img_array)
 
 
-def main(train_params, images_params, path_data, path_images_generated, upscale_width):
+def main(params, path_data, path_images_generated):
     
-    num_samples = images_params['num_samples']
-    output_directory = os.path.join(path_images_generated, images_params["train_version"])
+    num_samples = params['num_samples']
+    output_directory = os.path.join(path_images_generated, params["training_version"])
 
     check_if_gpu_available()
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    checkpoint_path = f'{path_data}/{images_params["train_version"]}/weights/checkpoint.pth'
+    checkpoint_path = f'{path_data}/{params["training_version"]}/weights/checkpoint.pth'
 
     checkpoint = torch.load(checkpoint_path)
 
-    generator = Generator(train_params["z_dim"], train_params["channels_img"], train_params["features_g"], img_size=train_params['image_size']).to(device)
+    generator = Generator(params["z_dim"], params["channels_img"], params["features_g"], img_size=params['image_size']).to(device)
 
     generator.load_state_dict(checkpoint['generator_state_dict'])
     generator.eval()
 
-    latent_dimension = train_params['z_dim']
+    latent_dimension = params['z_dim']
 
     print("Generating images...")
     images = generate_images(generator, latent_dimension, num_samples, device)
@@ -57,11 +57,13 @@ def main(train_params, images_params, path_data, path_images_generated, upscale_
 
     os.makedirs(output_directory, exist_ok=True)
 
+    upscale_width = params.get('upscale_width')
+
     print("Saving individual images...")
     for i in tqdm(range(num_samples)):
         individual_img = images[i].cpu().clamp(0, 1)
         img = tensor_to_PIL_image(individual_img)
-        image_size_str = f"{train_params['image_size']}x{train_params['image_size']}"
+        image_size_str = f"{params['image_size']}x{params['image_size']}"
         
         if upscale_width:
             image_size_str = f"{upscale_width}x{upscale_width}"
