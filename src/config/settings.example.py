@@ -1,10 +1,8 @@
 # STRUCTURE PROJECT SETTINGS
 PATH_DATA = "data"
 PATH_DATASET = "dataset"
-PATH_IMAGES_GENERATED = 'src/generated/images'
-PATH_VIDEOS_GENERATED = 'src/generated/videos'
+PATH_IMAGES_GENERATED = 'generated/images'
+PATH_VIDEOS_GENERATED = 'generated/videos'
 
 # JSON FILES SETTINGS
-PATH_TRAIN_PARAMS = 'src/json/training_params.json'
-PATH_IMAGE_PARAMS = 'src/json/image_params.json'
-PATH_VIDEO_PARAMS = 'src/json/video_params.json'
+PATH_PARAMS = 'src/json/params.json'
