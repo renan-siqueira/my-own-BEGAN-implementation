@@ -1,6 +1,6 @@
 import os
-import shutil
 import datetime
+import json
 
 import torch
 import matplotlib.pyplot as plt
@@ -8,15 +8,12 @@ import torch.nn as nn
 from torchvision import transforms, datasets
 
 
-def create_next_version_directory(base_dir, continue_last_training):
+def create_next_version_directory(base_dir):
     versions = [d for d in os.listdir(base_dir) if d.startswith('v') and os.path.isdir(os.path.join(base_dir, d))]
 
     if not versions:
         next_version = 1
     else:
-        if continue_last_training:
-            return f"v{max(int(v[1:]) for v in versions)}"
-        
         next_version = max(int(v[1:]) for v in versions) + 1
 
     new_dir_base = os.path.join(base_dir, f'v{next_version}')
@@ -106,7 +103,7 @@ def plot_losses(losses_g, losses_d, save_plot_image):
     plt.show()
 
 
-def safe_copy(src, dest_path):
+def safe_copy(json_data, dest_path):
     dest_dir, filename = os.path.split(dest_path)
 
     if not os.path.exists(dest_dir):
@@ -121,5 +118,7 @@ def safe_copy(src, dest_path):
 
         dest_path = os.path.join(dest_dir, f"{base_name}_{counter}{ext}")
 
-    shutil.copy(src, dest_path)
+    with open(dest_path, 'w', encoding="utf-8") as file:
+        json.dump(json_data, file, ensure_ascii=False, indent=4)
+
     return dest_path
