@@ -96,6 +96,7 @@ def update_params_from_args(params, arg_dict):
         if key in params:
             params[key] = value
 
+
 def main(args):
     """
     Main function to run training, image generation, or video generation based on provided 
