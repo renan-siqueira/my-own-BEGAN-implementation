@@ -17,12 +17,10 @@ This project implements the Boundary Equilibrium Generative Adversarial Network 
 - [Installing Dependencies](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/03.-Installing-Dependencies)
 - [Configuring the GPU](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/04.-Configuring-the-GPU)
 - [Preparing the Dataset](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/05.-Preparing-the-Dataset)
-- [Training Configuration](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/06.-Configuring-Training-Parameters)
-- [Configuring Training Parameters](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/07.-Training-the-Model)
+- [Configuring Training Parameters](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/06.-Configuring-Training-Parameters)
 - [Training the Model](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/07.-Training-the-Model)
 - [Generating Images](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/08.-Generating-Images-with-the-Trained-Model)
 - [Generating Videos](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/09.-Generating-Videos-Through-Image-Interpolation)
-- [Upscaling]()
 
 ---
 
