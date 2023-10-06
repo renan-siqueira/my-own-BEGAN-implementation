@@ -26,11 +26,17 @@ This project implements the Boundary Equilibrium Generative Adversarial Network 
 
 ---
 
+## Documentation
+
+For a detailed breakdown of the project, including its modules, setup, and features, please refer to the [project Wiki](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki).
+
+---
+
 ## License
 
 This project is open-sourced and available to everyone under the [MIT License](LICENSE).
 
-For more details check the [License and Copyright](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/11.-License-and-Copyright) wiki page.
+For more details check the [License and Copyright](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/License-and-Copyright) wiki page.
 
 ---
 
@@ -38,4 +44,4 @@ For more details check the [License and Copyright](https://github.com/renan-siqu
 
 Contributions are welcome! Feel free to open an issue or submit a pull request if you find any bugs or have suggestions for improvements.
 
-Consult the [Contribution and Community Guidelines](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/11.-License-and-Copyright) wiki page.
+Consult the [Contribution and Community Guidelines](https://github.com/renan-siqueira/my-own-BEGAN-implementation/wiki/Contribution-and-Community-Guidelines) wiki page.
