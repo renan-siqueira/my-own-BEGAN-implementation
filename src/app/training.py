@@ -243,7 +243,7 @@ def train_model(
             losses_g, losses_d, f"{weights_path}/checkpoint.pth"
         )
 
-        if epoch % save_model_at == 0:
+        if save_model_at is not None and epoch % save_model_at == 0:
             save_checkpoint(
                 epoch, generator, discriminator, optim_g, optim_d,
                 losses_g, losses_d, f"{weights_path}/checkpoint_epoch_{epoch}.pth"
