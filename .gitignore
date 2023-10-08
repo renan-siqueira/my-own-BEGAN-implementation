@@ -7,8 +7,7 @@ data
 generated
 
 settings.py
-rename_files_to_dataset.py
-copy_files_to_dataset.py
+copy_randomic_files.py
 
 params.json
 
