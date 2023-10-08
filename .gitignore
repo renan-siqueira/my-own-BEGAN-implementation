@@ -7,7 +7,6 @@ data
 generated
 
 settings.py
-copy_randomic_files.py
 
 params.json
 
