@@ -81,6 +81,7 @@ def main(params, path_data, path_dataset, path_params):
     utils.check_if_gpu_available()
     utils.check_if_set_seed(params["seed"])
 
+    print(f'Dataset: {path_dataset}\n')
     print(f'Image size: {params["image_size"]}x{params["image_size"]}\n')
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
