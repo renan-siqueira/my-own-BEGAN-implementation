@@ -34,11 +34,12 @@ import os
 import datetime
 import time
 
+from tqdm import tqdm
 import numpy as np
 import torch
 import torchvision.utils as vutils
+from torchvision import transforms
 from torch.autograd import Variable
-from tqdm import tqdm
 
 
 def log_progresso(log_file, message):
@@ -104,8 +105,13 @@ def calculate_fid(images_real, images_fake, inception_model):
     - The FID score measures the similarity between two sets of images. Lower values indicate the 
     two sets of images are more similar.
     """
-    real_features = inception_model(images_real).detach().cpu().numpy()
-    fake_features = inception_model(images_fake).detach().cpu().numpy()
+    transform = transforms.Resize((128, 128))
+
+    images_real_resized = torch.stack([transform(image) for image in images_real])
+    images_fake_resized = torch.stack([transform(image) for image in images_fake])
+
+    real_features = inception_model(images_real_resized).detach().cpu().numpy()
+    fake_features = inception_model(images_fake_resized).detach().cpu().numpy()
 
     mu_real, sigma_real = real_features.mean(axis=0), np.cov(real_features, rowvar=False)
     mu_fake, sigma_fake = fake_features.mean(axis=0), np.cov(fake_features, rowvar=False)
@@ -113,7 +119,7 @@ def calculate_fid(images_real, images_fake, inception_model):
     diff_mu = mu_real - mu_fake
     cov_mean = (sigma_real + sigma_fake) / 2
     fid = diff_mu.dot(diff_mu) + np.trace(sigma_real + sigma_fake - 2*np.sqrt(cov_mean))
-
+    
     return fid
 
 
@@ -225,8 +231,11 @@ def train_model(
         epoch_duration = end_time - start_time
         log_progresso(
             f"{log_dir}/trainning.log", 
-            f'Epoch {epoch}/{num_epochs}, g_loss: {g_loss.data}, d_loss: {d_loss.data}, \
-                FID: {fid_score}, Time: {epoch_duration:.2f} seconds'
+            (
+                f'Epoch {epoch}/{num_epochs}, g_loss: {g_loss.data}, '
+                f'd_loss: {d_loss.data}, FID: {fid_score}, '
+                f'Time: {epoch_duration:.2f} seconds'
+            )
         )
 
         losses_g.append(g_loss.data.cpu())
