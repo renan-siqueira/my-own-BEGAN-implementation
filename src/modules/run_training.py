@@ -86,13 +86,13 @@ def main(params, path_data, path_dataset, path_params):
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    inception_model = None
-    if params['image_size'] == 128:
-        # Frechet Inception Distance (FID)
-        inception_model = models.inception_v3(
-            weights='Inception_V3_Weights.DEFAULT', transform_input=False, init_weights=False
-        ).to(device)
-        inception_model = inception_model.eval()
+    # Frechet Inception Distance (FID)
+    inception_model = models.inception_v3(
+        weights='Inception_V3_Weights.DEFAULT',
+        transform_input=False,
+        init_weights=False
+    ).to(device)
+    inception_model = inception_model.eval()
 
     generator = Generator(
         params["z_dim"], params["channels_img"], params["features_g"], img_size=params['image_size']
